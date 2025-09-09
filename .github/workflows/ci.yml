@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    container: swift:latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: swift format lint -r -p -s .
+  test:
+    runs-on: ubuntu-latest
+    env:
+      APPLE_APP_ID: XXXXXXXX.com.apple.memo
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Start DB & Cache (wait for health)
+        run: docker compose up -d --wait postgres valkey
+      - name: Run tests (Swift in Docker)
+        run: docker compose run --rm swift bash -lc "swift build --build-tests"
+      - name: Shutdown
+        run: docker compose down -v
