@@ -4,10 +4,10 @@ import Hummingbird
 @main
 struct Entrypoint: AsyncParsableCommand {
   @Option(name: .shortAndLong)
-  var hostname: String = "127.0.0.1"
+  var hostname: String
 
   @Option(name: .shortAndLong)
-  var port: Int = 8080
+  var port: Int
 
   func run() async throws {
     let app = try await buildApplication(entryPoint: self)

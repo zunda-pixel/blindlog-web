@@ -17,7 +17,10 @@ func buildApplication(
   return Application(
     router: router,
     configuration: .init(
-      address: .hostname(entryPoint.hostname, port: entryPoint.port)
+      address: .hostname(
+        entryPoint.hostname,
+        port: entryPoint.port
+      )
     ),
     eventLoopGroupProvider: .shared(.singletonMultiThreadedEventLoopGroup),
     logger: Logger(label: "Server")
