@@ -25,7 +25,7 @@ COPY . .
 
 # Build the application, with optimizations, with static linking, and using jemalloc
 RUN swift build -c release \
-    --product "{{HB_EXECUTABLE_NAME}}" \
+    --product App \
     --static-swift-stdlib \
     -Xlinker -ljemalloc
 
@@ -33,7 +33,7 @@ RUN swift build -c release \
 WORKDIR /staging
 
 # Copy main executable to staging area
-RUN cp "$(swift build --package-path /build -c release --show-bin-path)/{{HB_EXECUTABLE_NAME}}" ./
+RUN cp "$(swift build --package-path /build -c release --show-bin-path)/App" ./
 
 # Copy static swift backtracer binary to staging area
 RUN cp "/usr/libexec/swift/linux/swift-backtrace-static" ./
