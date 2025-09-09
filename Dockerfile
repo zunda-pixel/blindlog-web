@@ -83,5 +83,4 @@ USER hummingbird:hummingbird
 EXPOSE 8080
 
 # Start the Hummingbird service when the image is run, default to listening on 8080 in production environment
-ENTRYPOINT ["./App"]
 ENTRYPOINT ["/app/entrypoint.sh"]
