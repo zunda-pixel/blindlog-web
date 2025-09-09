@@ -9,8 +9,8 @@ let package = Package(
   ],
   products: [
     .executable(
-      name: "Server",
-      targets: ["Server"]
+      name: "App",
+      targets: ["App"]
     )
   ],
   dependencies: [
@@ -19,7 +19,7 @@ let package = Package(
   ],
   targets: [
     .executableTarget(
-      name: "Server",
+      name: "App",
       dependencies: [
         .product(name: "ArgumentParser", package: "swift-argument-parser"),
         .product(name: "Hummingbird", package: "hummingbird"),
