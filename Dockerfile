@@ -25,7 +25,7 @@ COPY . .
 
 # Build the application, with optimizations, with static linking, and using jemalloc
 RUN swift build -c release \
-    --product App \
+    --product "App" \
     --static-swift-stdlib \
     -Xlinker -ljemalloc
 
