@@ -2,7 +2,7 @@ import ArgumentParser
 import Hummingbird
 
 @main
-struct Entrypoint: AsyncParsableCommand {
+struct App: AsyncParsableCommand {
   @Option(name: .shortAndLong)
   var hostname: String
 
