@@ -53,7 +53,7 @@ func buildRouter() throws -> Router<AppRequestContext> {
   }
   
   router.get("/.well-known/apple-app-site-association") { _, _ in
-    WebCredentials(webcredentials: .init(apps: ["S39RJQ2UDF.com.blindlog.BlindLog"]))
+    WebCredentials(webcredentials: .init(apps: ["PU5HXZ4FZ2.com.blindlog.BlindLog"]))
   }
   return router
 }
