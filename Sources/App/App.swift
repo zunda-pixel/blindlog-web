@@ -1,13 +1,14 @@
 import ArgumentParser
 import Hummingbird
+import Logging
 
 @main
 struct App: AsyncParsableCommand {
   @Option(name: .shortAndLong)
-  var hostname: String
+  var hostname: String = "127.0.0.1"
 
   @Option(name: .shortAndLong)
-  var port: Int
+  var port: Int = 8080
 
   func run() async throws {
     let app = try await buildApplication(entryPoint: self)
@@ -19,3 +20,10 @@ struct App: AsyncParsableCommand {
     }
   }
 }
+
+/// Extend `Logger.Level` so it can be used as an argument
+#if hasFeature(RetroactiveAttribute)
+    extension Logger.Level: @retroactive ExpressibleByArgument {}
+#else
+    extension Logger.Level: ExpressibleByArgument {}
+#endif

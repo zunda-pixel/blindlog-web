@@ -3,7 +3,7 @@ import Hummingbird
 import Logging
 
 func buildApplication(
-  entryPoint: Entrypoint
+  entryPoint: App
 ) async throws -> some ApplicationProtocol {
   let environment = Environment()
   let router = Router()
