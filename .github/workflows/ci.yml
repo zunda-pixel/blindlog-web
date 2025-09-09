@@ -1,25 +1,26 @@
 name: CI
 
 on:
+  push:
+    branches:
+    - main
+    paths:
+    - '**.swift'
+    - '**.yml'
   pull_request:
+  workflow_dispatch:
 
 jobs:
-  lint:
+  linux:
     runs-on: ubuntu-latest
-    container: swift:latest
+    strategy:
+      matrix:
+        image:
+          - 'swift:latest'
+    container:
+      image: ${{ matrix.image }}
     steps:
-      - uses: actions/checkout@v5
-      - run: swift format lint -r -p -s .
-  test:
-    runs-on: ubuntu-latest
-    env:
-      APPLE_APP_ID: XXXXXXXX.com.apple.memo
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-      - name: Start DB & Cache (wait for health)
-        run: docker compose up -d --wait postgres valkey
-      - name: Run tests (Swift in Docker)
-        run: docker compose run --rm swift bash -lc "swift build --build-tests"
-      - name: Shutdown
-        run: docker compose down -v
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Test
+      run: swift test

@@ -3,22 +3,20 @@ import Hummingbird
 import Logging
 
 @main
-struct App: AsyncParsableCommand {
-  @Option(name: .shortAndLong)
-  var hostname: String = "127.0.0.1"
+struct AppCommand: AsyncParsableCommand, AppArguments {
+    @Option(name: .shortAndLong)
+    var hostname: String = "127.0.0.1"
 
-  @Option(name: .shortAndLong)
-  var port: Int = 8080
+    @Option(name: .shortAndLong)
+    var port: Int = 8080
 
-  func run() async throws {
-    let app = try await buildApplication(entryPoint: self)
-    do {
-      try await app.runService()
-    } catch {
-      app.logger.error("\(error.localizedDescription)")
-      throw error
+    @Option(name: .shortAndLong)
+    var logLevel: Logger.Level?
+
+    func run() async throws {
+        let app = try await buildApplication(self)
+        try await app.runService()
     }
-  }
 }
 
 /// Extend `Logger.Level` so it can be used as an argument
