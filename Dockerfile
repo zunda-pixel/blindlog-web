@@ -84,4 +84,4 @@ EXPOSE $PORT
 
 # Start the Hummingbird service when the image is run, default to listening on 8080 in production environment
 ENTRYPOINT ["./App"]
-CMD --hostname 0.0.0.0 --port $PORT
+CMD ["--hostname", "0.0.0.0", "--port", "8080"]
