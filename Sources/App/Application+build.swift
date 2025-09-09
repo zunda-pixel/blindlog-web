@@ -51,5 +51,28 @@ func buildRouter() throws -> Router<AppRequestContext> {
   router.get("/") { _, _ in
     return "Hello!"
   }
+  
+  router.get("/.well-known/apple-app-site-association") { _, _ in
+    WebCredentials(webcredentials: .init(apps: ["S39RJQ2UDF.com.blindlog.BlindLog"]))
+  }
   return router
+}
+
+struct WebCredentials: Codable, ResponseGenerator {
+  var webcredentials: WebCredential
+  
+  struct WebCredential: Codable {
+    let apps: [String]
+  }
+  
+  func response(
+    from request: HummingbirdCore.Request,
+    context: some Hummingbird.RequestContext
+  ) throws -> HummingbirdCore.Response {
+    try context.responseEncoder.encode(
+      self,
+      from: request,
+      context: context
+    )
+  }
 }
