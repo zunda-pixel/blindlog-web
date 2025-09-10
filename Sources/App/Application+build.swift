@@ -27,7 +27,7 @@ public func buildApplication(_ arguments: some AppArguments) async throws
       ?? .info
     return logger
   }()
-  let router = try buildRouter()
+  let router = try buildRouter(environment: environment)
   let app = Application(
     router: router,
     configuration: .init(
@@ -40,7 +40,7 @@ public func buildApplication(_ arguments: some AppArguments) async throws
 }
 
 /// Build router
-func buildRouter() throws -> Router<AppRequestContext> {
+func buildRouter(environment: Environment) throws -> Router<AppRequestContext> {
   let router = Router(context: AppRequestContext.self)
   // Add middleware
   router.addMiddleware {
@@ -53,7 +53,8 @@ func buildRouter() throws -> Router<AppRequestContext> {
   }
   
   router.get("/.well-known/apple-app-site-association") { _, _ in
-    WebCredentials(webcredentials: .init(apps: ["PU5HXZ4FZ2.com.blindlog.BlindLog"]))
+    let appleAppIDs = environment.get("APPLE_APP_ID").map { [$0] } ?? []
+    return WebCredentials(webcredentials: .init(apps: appleAppIDs))
   }
   return router
 }
