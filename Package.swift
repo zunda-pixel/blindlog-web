@@ -20,7 +20,6 @@ let package = Package(
         .product(name: "ArgumentParser", package: "swift-argument-parser"),
         .product(name: "Hummingbird", package: "hummingbird"),
       ],
-      path: "Sources/App"
     ),
     .testTarget(
       name: "AppTests",
@@ -28,7 +27,6 @@ let package = Package(
         .byName(name: "App"),
         .product(name: "HummingbirdTesting", package: "hummingbird"),
       ],
-      path: "Tests/AppTests"
     ),
   ]
 )
