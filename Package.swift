@@ -24,7 +24,7 @@ let package = Package(
     .testTarget(
       name: "AppTests",
       dependencies: [
-        .byName(name: "App"),
+        .target(name: "App"),
         .product(name: "HummingbirdTesting", package: "hummingbird"),
       ],
     ),
