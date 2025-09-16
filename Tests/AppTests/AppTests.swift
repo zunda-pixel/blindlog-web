@@ -1,23 +1,25 @@
 import Hummingbird
 import HummingbirdTesting
 import Logging
-import XCTest
+import Testing
 
 @testable import App
 
-final class AppTests: XCTestCase {
+@Suite
+struct AppTests {
   struct TestArguments: AppArguments {
     let hostname = "127.0.0.1"
     let port = 0
     let logLevel: Logger.Level? = .trace
   }
 
-  func testApp() async throws {
+  @Test("App responds with expected greeting")
+  func appRespondsWithGreeting() async throws {
     let args = TestArguments()
     let app = try await buildApplication(args)
     try await app.test(.router) { client in
       try await client.execute(uri: "/", method: .get) { response in
-        XCTAssertEqual(response.body, ByteBuffer(string: "Hello!"))
+        #expect(response.body == ByteBuffer(string: "Hello!"))
       }
     }
   }
